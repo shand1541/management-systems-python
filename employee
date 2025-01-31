@@ -1,0 +1,124 @@
+# File name: employee.py
+# Author: Shannon Donnelly
+# Student number: c23302301
+# Description: Represents an Employee enrolled in a training course with validation
+
+class Employee:
+    def __init__(self, employee_number=0, name="", years_working=0, training_course="ERROR"):
+        self.employee_number = employee_number
+        self.name = name
+        self.years_working = 0
+        self.training_course = "ERROR"
+
+        # Validate years_working
+        if years_working >= 5:
+            self.years_working = years_working
+        else:
+            print("Error: Employees with less than 5 years experience cannot enroll.")
+
+        # Validate training_course
+        if training_course and training_course.startswith("FOOD"):
+            self.training_course = training_course
+        else:
+            print("Error: Course name should start with 'FOOD'. Setting course to 'ERROR'.")
+
+    def get_employee_number(self):
+        return self.employee_number
+
+    def set_employee_number(self, employee_number):
+        self.employee_number = employee_number
+
+    def get_name(self):
+        return self.name
+
+    def set_name(self, name):
+        self.name = name
+
+    def get_years_working(self):
+        return self.years_working
+
+    def set_years_working(self, years_working):
+        if years_working >= 5:
+            self.years_working = years_working
+        else:
+            print("Error: Must have 5+ years of experience.")
+            self.years_working = 0
+
+    def get_training_course(self):
+        return self.training_course
+
+    def set_training_course(self, training_course):
+        if training_course and training_course.startswith("FOOD"):
+            self.training_course = training_course
+        else:
+            print("Error: Course name should start with 'FOOD'. Setting course to 'ERROR'.")
+
+    def display_employee_details(self):
+        print(f"Employee Number: {self.employee_number}, Name: {self.name}, "
+              f"Years Working: {self.years_working}, Training Course: {self.training_course}")
+
+    def __eq__(self, other):
+        if isinstance(other, Employee):
+            return self.employee_number == other.employee_number
+        return False
+
+
+# File name: linked_list.py
+# Author: Shannon Donnelly
+# Student number: c23302301
+# Description: Linked List implementation for Employee management
+
+class Node:
+    def __init__(self, element):
+        self.element = element
+        self.next = None
+
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def add(self, element):
+        new_node = Node(element)
+        if not self.head:
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = new_node
+
+    def delete(self, element):
+        if not self.head:
+            return
+
+        if self.head.element == element:
+            self.head = self.head.next
+            return
+
+        current = self.head
+        while current.next and current.next.element != element:
+            current = current.next
+
+        if current.next:
+            current.next = current.next.next
+
+    def display_list(self):
+        current = self.head
+        while current:
+            current.element.display_employee_details()
+            current = current.next
+
+    def is_empty(self):
+        return self.head is None
+
+    def contains(self, element):
+        current = self.head
+        while current:
+            if current.element == element:
+                return True
+            current = current.next
+        return False
+
+    def get_first(self):
+        return self.head.element if self.head else None
