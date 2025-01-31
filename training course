@@ -1,0 +1,52 @@
+# File name: training_courses.py
+# Author: Shannon Donnelly
+# Student number: c23302301
+# Description: Driver class for managing employee training course enrollments
+
+def find_employee_by_number(employee_list, employee_number):
+    current = employee_list.head
+    while current:
+        if current.element.get_employee_number() == employee_number:
+            return current.element
+        current = current.next
+    return None
+
+
+def main():
+    employee_list = LinkedList()
+
+    num_employees = int(input("Enter the number of employees (up to 10): "))
+    if num_employees < 1 or num_employees > 10:
+        print("Error: Number of employees must be between 1 and 10.")
+        return
+
+    for i in range(num_employees):
+        print(f"Enter details for Employee {i + 1}:")
+        employee_number = int(input("Employee Number: "))
+        name = input("Name: ")
+        years_working = int(input("Years Working: "))
+        training_course = input("Training Course Name: ")
+
+        employee = Employee(employee_number, name, years_working, training_course)
+        if not employee_list.contains(employee):
+            employee_list.add(employee)
+        else:
+            print("Error: Employee with this number already exists.")
+
+    print("\nDisplaying all employees:")
+    employee_list.display_list()
+
+    remove_employee_number = int(input("\nEnter employee number to remove from the course: "))
+    employee_to_remove = find_employee_by_number(employee_list, remove_employee_number)
+    if employee_to_remove:
+        employee_list.delete(employee_to_remove)
+        print("Employee removed successfully.")
+    else:
+        print("Error: Employee not found.")
+
+    print("\nDisplaying updated list of employees:")
+    employee_list.display_list()
+
+
+if __name__ == "__main__":
+    main()
